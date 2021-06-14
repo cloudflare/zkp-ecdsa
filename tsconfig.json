@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "ES2020",
+        "lib": [
+            "ES2020",
+            "webworker"
+        ],
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "composite": true,
+        "incremental": true,
+        "removeComments": true,
+        "isolatedModules": true,
+        "strict": true,
+        "noEmitOnError": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "sourceRoot": ".",
+        "rootDir": ".",
+        "outDir": "./lib"
+    },
+    "files": [],
+    "include": [],
+    "references": [
+        {
+            "path": "./src"
+        }
+    ]
+}
