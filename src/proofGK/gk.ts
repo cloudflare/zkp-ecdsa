@@ -129,7 +129,7 @@ export async function proveMembership(
     for (let i = 0; i < n; i++) {
         cl[i] = commit(params, eli[i], ri[i])
         ca[i] = commit(params, ai[i], si[i])
-        cb[i] = commit(params, eli[i] * ai[i], ti[i])
+        cb[i] = commit(params, BigInt(eli[i]) * ai[i], ti[i])
     }
 
     const omegas = []
@@ -158,7 +158,7 @@ export async function proveMembership(
         for (let i = 0; i < n; i++) {
             const oldlen: number = p.length
             for (let j = 0; j < oldlen; j++) {
-                p[oldlen + j] = posMod(ratio[i] * p[j], c.order)
+                p[oldlen + j] = posMod(BigInt(ratio[i]) * p[j], c.order)
             }
         }
 
