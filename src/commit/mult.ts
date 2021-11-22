@@ -94,7 +94,7 @@ export async function proveMult(
     params: PedersenParams,
     x: bigint,
     y: bigint,
-    z: bigint,
+    _z: bigint,
     Cx: Commitment,
     Cy: Commitment,
     Cz: Commitment
