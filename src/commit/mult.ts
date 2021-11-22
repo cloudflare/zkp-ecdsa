@@ -100,33 +100,33 @@ export async function proveMult(
     Cz: Commitment
 ): Promise<MultProof> {
     const xx = params.c.newScalar(x),
-    /*C4 = Cy.p.mul(xx), // C4 = Cy * x
-    r4 = Cy.r.mul(xx), // C4 = zG + r4H*/
-    // Step 1: Compute commitments
-    k_x = rnd(params.c.order),
-    k_y = rnd(params.c.order),
-    k_z = rnd(params.c.order),
-    ky = params.c.newScalar(k_y),
-    kz = params.c.newScalar(k_z),
-    Ax = params.commit(k_x),
-    Ay = params.commit(k_y),
-    //Az = params.commit(k_z),
-    //A4_1 = params.commit(k_z),
-    A4_2 = (Cx.p.mul(ky)).add(params.h.mul(kz)),
-    // Step 2: Compute challenge  H(Cx, Cy, Cz, C4, Ax, Ay, Az, A4_1, A4_2)
-    c = await hashPoints('SHA-256', [Cx.p, Cy.p, Cz.p, Ax.p, Ay.p, A4_2]),
-    cc = params.c.newScalar(c),
-    kx = params.c.newScalar(k_x),
-    //kz = params.c.newScalar(k_z),
-    yy = params.c.newScalar(y),
-    //zz = params.c.newScalar(z),
-    t_x = kx.sub(cc.mul(xx)), // tx = kx-c*x
-    t_y = ky.sub(cc.mul(yy)), // ty = ky-c*y
-    //t_z = kz.sub(cc.mul(zz)), // tz = kz-c*z
-    t_rx = Ax.r.sub(cc.mul(Cx.r)), //  t_rx = sx-c*rx
-    t_ry = Ay.r.sub(cc.mul(Cy.r)), //  t_ry = sy-c*ry
-    //t_rz = Az.r.sub(cc.mul(Cz.r)), //  t_rz = sz-c*rz
-    t_r4 = kz.sub(cc.mul(Cz.r.sub(Cx.r.mul(yy)))) //  t_r4 = s4-c*r4
+        /*C4 = Cy.p.mul(xx), // C4 = Cy * x
+        r4 = Cy.r.mul(xx), // C4 = zG + r4H*/
+        // Step 1: Compute commitments
+        k_x = rnd(params.c.order),
+        k_y = rnd(params.c.order),
+        k_z = rnd(params.c.order),
+        ky = params.c.newScalar(k_y),
+        kz = params.c.newScalar(k_z),
+        Ax = params.commit(k_x),
+        Ay = params.commit(k_y),
+        //Az = params.commit(k_z),
+        //A4_1 = params.commit(k_z),
+        A4_2 = (Cx.p.mul(ky)).add(params.h.mul(kz)),
+        // Step 2: Compute challenge  H(Cx, Cy, Cz, C4, Ax, Ay, Az, A4_1, A4_2)
+        c = await hashPoints('SHA-256', [Cx.p, Cy.p, Cz.p, Ax.p, Ay.p, A4_2]),
+        cc = params.c.newScalar(c),
+        kx = params.c.newScalar(k_x),
+        //kz = params.c.newScalar(k_z),
+        yy = params.c.newScalar(y),
+        //zz = params.c.newScalar(z),
+        t_x = kx.sub(cc.mul(xx)), // tx = kx-c*x
+        t_y = ky.sub(cc.mul(yy)), // ty = ky-c*y
+        //t_z = kz.sub(cc.mul(zz)), // tz = kz-c*z
+        t_rx = Ax.r.sub(cc.mul(Cx.r)), //  t_rx = sx-c*rx
+        t_ry = Ay.r.sub(cc.mul(Cy.r)), //  t_ry = sy-c*ry
+        //t_rz = Az.r.sub(cc.mul(Cz.r)), //  t_rz = sz-c*rz
+        t_r4 = kz.sub(cc.mul(Cz.r.sub(Cx.r.mul(yy)))) //  t_r4 = s4-c*r4
 
     return new MultProof(Ax.p, Ay.p, A4_2, t_x, t_y, t_rx, t_ry, t_r4)
 }
