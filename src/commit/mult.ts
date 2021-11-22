@@ -161,7 +161,7 @@ export async function aggregateMult(
     const A_yrel = new Relation(params.c)
     A_yrel.insertM([params.g, params.h, Cy, pi.A_y.neg()], [pi.t_y, pi.t_ry, cc, params.c.newScalar(BigInt(1))])
     const A_4_2rel = new Relation(params.c)
-    A_4_2rel.insertM([Cx, params.h, Cz.neg(), pi.A_4_2.neg()], [pi.t_y, pi.t_r4, cc, params.c.newScalar(BigInt(1))])
+    A_4_2rel.insertM([Cx, params.h, Cz, pi.A_4_2.neg()], [pi.t_y, pi.t_r4, cc, params.c.newScalar(BigInt(1))])
 
     A_xrel.drain(multi)
     A_yrel.drain(multi)
