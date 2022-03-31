@@ -1,7 +1,7 @@
 {
     "name": "@cloudflare/zkp-ecdsa",
     "version": "0.2.3",
-    "description": "Zero-Knowledge Proof for ECDSA",
+    "description": "zkp-ecdsa: A Typescript Implementation of ZKAttest",
     "repository": {
         "type": "git",
         "url": "https://github.com/cloudflare/zkp-ecdsa.git"

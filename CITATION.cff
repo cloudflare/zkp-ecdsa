@@ -1,0 +1,60 @@
+---
+cff-version: 1.2.0
+version: 0.2.3
+title: "zkp-ecdsa: A Typescript Implementation of ZKAttest"
+license: Apache-2.0
+abstract: >
+   ZKAttest proofs knowledge of an ECDSA-P256 signature under one of many
+   public keys that are stored in a list without revealing which public
+   key was used to sign the message.
+authors:
+  - family-names: Faz-Hernández
+    given-names: Armando
+    affiliation: Cloudflare, Inc.
+    orcid: "https://orcid.org/0000-0001-5502-8666"
+  - family-names: Ladd
+    given-names: Watson
+    affiliation: Cloudflare, Inc.
+    orcid: "https://orcid.org/0000-0002-1674-8529"
+  - family-names: Maram
+    given-names: Deepak
+    affiliation: Cornell Tech.
+    orcid: "https://orcid.org/0000-0001-5324-6889"
+date-released: "2021-06-14"
+keywords:
+  - zero-knowledge
+  - cryptography
+  - crypto
+  - ecdsa
+repository-code: "https://github.com/cloudflare/zkp-ecdsa"
+message: "If you use this software, please cite it as below."
+preferred-citation:
+  type: conference-paper
+  doi: "10.1007/978-3-030-99277-4_4"
+  title: "ZKAttest: Ring and Group Signatures for Existing ECDSA Keys"
+  authors:
+    - family-names: Faz-Hernández
+      given-names: Armando
+      orcid: "https://orcid.org/0000-0003-4925-7248"
+    - family-names: Ladd
+      given-names: Watson
+      orcid: "https://orcid.org/0000-0003-4925-7248"
+    - family-names: Maram
+      given-names: Deepak
+      orcid: "https://orcid.org/0000-0003-4925-7248"
+  collection-title: "Selected Areas in Cryptography"
+  editors:
+    - family-names: AlTawy
+      given-names: Riham
+    - family-names: Hülsing
+      given-names: Andreas
+  publisher:
+    name: "Springer International Publishing"
+  month: 10
+  year: 2021
+  start: 68
+  end: 83
+  isbn: "978-3-030-99277-4"
+  notes: >
+    Available at https://github.com/cloudflare/zkp-ecdsa.
+    v0.2.3 Accessed Oct 2021
