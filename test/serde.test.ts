@@ -23,10 +23,10 @@ export function serdeTest<T extends Newable<U>, U extends Comparable<U>>(type: T
         const json = writeJson(type, object),
             object2 = readJson(type, json)
         return object.eq(object2)
-    } catch (e) {
+    } catch (e: unknown) {
         console.log('Serialization error: ', typeof object)
-        console.log(e.message)
-        console.log(e.stack)
+        console.log((e as Error).message)
+        console.log((e as Error).stack)
         return false
     }
 }

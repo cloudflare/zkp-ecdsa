@@ -1,6 +1,6 @@
-module.exports = {
+export default {
     entry: "./lib/src/index.js",
-    target: "webworker",
     mode: "production",
     externals: { crypto: 'null' },
+    optimization: { minimize: false },
 }

@@ -25,9 +25,12 @@ import * as multiMult from './curves/multimult.test.js'
 import * as pointAdd from './exp/pointAdd.test.js'
 import * as zkpList from './zkpAttestList.test.js'
 
-import isomCrypto from 'node-webcrypto-shim'
+// Mocking crypto with @peculiar/webcrypto only for tests.
+import { Crypto } from '@peculiar/webcrypto'
 
-global.crypto = isomCrypto
+if (typeof crypto === 'undefined') {
+    global.crypto = new Crypto()
+}
 
 const tests = [
     { name: 'zkpAttestList', test: zkpList.testZKP },
@@ -66,9 +69,9 @@ async function runTests(): Promise<void> {
                 console.log(`failed test ${name}`)
                 success = false
             }
-        } catch (e) {
-            console.log('Error: ' + e.message)
-            console.log('Stack: ' + e.stack)
+        } catch (e: unknown) {
+            console.log('Error: ' + (e as Error).message)
+            console.log('Stack: ' + (e as Error).stack)
         }
     }
     if (!success) {
