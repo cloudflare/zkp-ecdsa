@@ -35,13 +35,13 @@ preferred-citation:
   authors:
     - family-names: Faz-Hernández
       given-names: Armando
-      orcid: "https://orcid.org/0000-0003-4925-7248"
+      orcid: "https://orcid.org/0000-0001-5502-8666"
     - family-names: Ladd
       given-names: Watson
-      orcid: "https://orcid.org/0000-0003-4925-7248"
+      orcid: "https://orcid.org/0000-0002-1674-8529"
     - family-names: Maram
       given-names: Deepak
-      orcid: "https://orcid.org/0000-0003-4925-7248"
+      orcid: "https://orcid.org/0000-0001-5324-6889"
   collection-title: "Selected Areas in Cryptography"
   editors:
     - family-names: AlTawy
