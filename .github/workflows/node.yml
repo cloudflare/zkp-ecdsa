@@ -1,0 +1,31 @@
+---
+name: zkp-ecdsa CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16]
+    steps:
+    - name: Checking out
+      uses: actions/checkout@v3
+    - name: Setup Node ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Installing
+      run: npm ci
+    - name: Linting
+      run: npm run lint
+    - name: Building
+      run: npm run build
+    - name: Testing
+      run: npm test
