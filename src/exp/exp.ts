@@ -86,7 +86,7 @@ export class ExpProof {
 function paddedBits(val: bigint, length: number): boolean[] {
     const ret = []
     for (let i = 0; i < length; i++) {
-        ret[i] = val % BigInt(2) == BigInt(1)
+        ret[i as number] = val % BigInt(2) == BigInt(1)
         val >>= BigInt(1)
     }
     return ret
@@ -95,14 +95,14 @@ function paddedBits(val: bigint, length: number): boolean[] {
 function generateIndices(indnum: number, limit: number): number[] {
     const ret: number[] = []
     for (let i = 0; i < limit; i++) {
-        ret[i] = i
+        ret[i as number] = i
     }
     // Algorithm P, Seminumerical algorithms, Knuth.
     for (let i = 0; i < limit - 2; i++) {
         const j = Number(rndRange(BigInt(i), BigInt(limit - 1))),
-            k = ret[i]
-        ret[i] = ret[j]
-        ret[j] = k
+            k = ret[i as number]
+        ret[i as number] = ret[j as number]
+        ret[j as number] = k
     }
     ret.slice(indnum)
     return ret
@@ -142,25 +142,25 @@ export async function proveExp(
         Ty = new Array<Commitment>(secparam)
 
     for (let i = 0; i < secparam; i++) {
-        alpha[i] = paramsNIST.c.randomScalar()
-        r[i] = paramsNIST.c.randomScalar()
-        T[i] = paramsNIST.g.mul(alpha[i])
-        A[i] = T[i].add(paramsNIST.h.mul(r[i]))
-        const coordT = T[i].toAffine()
+        alpha[i as number] = paramsNIST.c.randomScalar()
+        r[i as number] = paramsNIST.c.randomScalar()
+        T[i as number] = paramsNIST.g.mul(alpha[i as number])
+        A[i as number] = T[i as number].add(paramsNIST.h.mul(r[i as number]))
+        const coordT = T[i as number].toAffine()
         if (!coordT) {
             throw new Error('T[i] is at infinity')
         }
         const { x, y } = coordT
-        Tx[i] = paramsWario.commit(x)
-        Ty[i] = paramsWario.commit(y)
+        Tx[i as number] = paramsWario.commit(x)
+        Ty[i as number] = paramsWario.commit(y)
     }
 
     // Compute challenge c = H (Cx, Cy, A, Tx, Ty)
     const arr = [Px.p, Py.p]
     for (let i = 0; i < secparam; i++) {
-        arr.push(A[i])
-        arr.push(Tx[i].p)
-        arr.push(Ty[i].p)
+        arr.push(A[i as number])
+        arr.push(Tx[i as number].p)
+        arr.push(Ty[i as number].p)
     }
     let challenge = await hashPoints('SHA-256', arr)
     const allProofs = new Array<ExpProof>(secparam)
@@ -168,13 +168,13 @@ export async function proveExp(
     for (let i = 0; i < secparam; i++) {
         if (isOdd(challenge)) {
             proof = new ExpProof(
-                A[i],
-                Tx[i].p,
-                Ty[i].p,
-                alpha[i],
-                r[i],
-                Tx[i].r,
-                Ty[i].r,
+                A[i as number],
+                Tx[i as number].p,
+                Ty[i as number].p,
+                alpha[i as number],
+                r[i as number],
+                Tx[i as number].r,
+                Ty[i as number].r,
                 undefined,
                 undefined,
                 undefined,
@@ -183,7 +183,7 @@ export async function proveExp(
             )
         } else {
             // z = alpha - s
-            const z = alpha[i].sub(paramsNIST.c.newScalar(s))
+            const z = alpha[i as number].sub(paramsNIST.c.newScalar(s))
             let T1 = paramsNIST.g.mul(z)
             if (Q) {
                 T1 = T1.add(Q)
@@ -196,24 +196,35 @@ export async function proveExp(
                 T1x = paramsWario.commit(x),
                 T1y = paramsWario.commit(y),
                 // alpha R - s R = z R => T1 + P = T
-                pointAddProof = await provePointAdd(paramsWario, T1, P, T[i], T1x, T1y, Px, Py, Tx[i], Ty[i])
+                pointAddProof = await provePointAdd(
+                    paramsWario,
+                    T1,
+                    P,
+                    T[i as number],
+                    T1x,
+                    T1y,
+                    Px,
+                    Py,
+                    Tx[i as number],
+                    Ty[i as number]
+                )
 
             proof = new ExpProof(
-                A[i],
-                Tx[i].p,
-                Ty[i].p,
+                A[i as number],
+                Tx[i as number].p,
+                Ty[i as number].p,
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 z,
-                r[i].sub(Cs.r),
+                r[i as number].sub(Cs.r),
                 pointAddProof,
                 T1x.r,
                 T1y.r
             )
         }
-        allProofs[i] = proof
+        allProofs[i as number] = proof
         challenge >>= BigInt(1)
     }
     return allProofs
@@ -241,29 +252,29 @@ export async function verifyExp(
     multiN.addKnown(Clambda)
     const arr = [Px, Py]
     for (let i = 0; i < pi.length; i++) {
-        arr.push(pi[i].A)
-        arr.push(pi[i].Tx)
-        arr.push(pi[i].Ty)
+        arr.push(pi[i as number].A)
+        arr.push(pi[i as number].Tx)
+        arr.push(pi[i as number].Ty)
     }
 
     const challenge = await hashPoints('SHA-256', arr),
         indices = generateIndices(secparam, pi.length),
         challengeBits = paddedBits(challenge, pi.length)
     for (let j = 0; j < secparam; j++) {
-        const i = indices[j]
+        const i = indices[j as number]
         //const { commitment, response } = pi[i]
 
-        if (challengeBits[i]) {
+        if (challengeBits[i as number]) {
             const resp = {
-                    alpha: pi[i].alpha!,
-                    beta1: pi[i].beta1!,
-                    beta2: pi[i].beta2!,
-                    beta3: pi[i].beta3!,
-                },
+                alpha: pi[i as number].alpha!,
+                beta1: pi[i as number].beta1!,
+                beta2: pi[i as number].beta2!,
+                beta3: pi[i as number].beta3!,
+            },
                 T = paramsNIST.g.mul(resp.alpha),
                 relA = new Relation(paramsNIST.c)
             relA.insertM(
-                [T, paramsNIST.h, pi[i].A.neg()],
+                [T, paramsNIST.h, pi[i as number].A.neg()],
                 [paramsNIST.c.newScalar(BigInt(1)), resp.beta1, paramsNIST.c.newScalar(BigInt(1))]
             )
             relA.drain(multiN)
@@ -277,27 +288,27 @@ export async function verifyExp(
                 relTx = new Relation(paramsWario.c),
                 relTy = new Relation(paramsWario.c)
             relTx.insertM(
-                [paramsWario.g, paramsWario.h, pi[i].Tx.neg()],
+                [paramsWario.g, paramsWario.h, pi[i as number].Tx.neg()],
                 [sx, resp.beta2, paramsWario.c.newScalar(BigInt(1))]
             )
             relTy.insertM(
-                [paramsWario.g, paramsWario.h, pi[i].Ty.neg()],
+                [paramsWario.g, paramsWario.h, pi[i as number].Ty.neg()],
                 [sy, resp.beta3, paramsWario.c.newScalar(BigInt(1))]
             )
             relTx.drain(multiW)
             relTy.drain(multiW)
         } else {
             const resp = {
-                z: pi[i].z!,
-                z2: pi[i].z2!,
-                proof: pi[i].proof!,
-                r1: pi[i].r1!,
-                r2: pi[i].r2!,
+                z: pi[i as number].z,
+                z2: pi[i as number].z2,
+                proof: pi[i as number].proof,
+                r1: pi[i as number].r1,
+                r2: pi[i as number].r2,
             }
             let T1 = paramsNIST.g.mul(resp.z)
             const relA = new Relation(paramsNIST.c)
             relA.insertM(
-                [T1, Clambda, pi[i].A.neg(), paramsNIST.h],
+                [T1, Clambda, pi[i as number].A.neg(), paramsNIST.h],
                 [
                     paramsNIST.c.newScalar(BigInt(1)),
                     paramsNIST.c.newScalar(BigInt(1)),
@@ -320,7 +331,19 @@ export async function verifyExp(
                 sy = paramsWario.c.newScalar(coordT1.y),
                 T1x = paramsWario.g.dblmul(sx, paramsWario.h, resp.r1),
                 T1y = paramsWario.g.dblmul(sy, paramsWario.h, resp.r2)
-            if (!(await aggregatePointAdd(paramsWario, T1x, T1y, Px, Py, pi[i].Tx, pi[i].Ty, resp.proof, multiW))) {
+            if (
+                !(await aggregatePointAdd(
+                    paramsWario,
+                    T1x,
+                    T1y,
+                    Px,
+                    Py,
+                    pi[i as number].Tx,
+                    pi[i as number].Ty,
+                    resp.proof,
+                    multiW
+                ))
+            ) {
                 return false
             }
         }

@@ -19,7 +19,7 @@ import { invMod, posMod } from '../bignum/big.js'
 function eval_poly(coeff: bigint[], x: bigint, m: bigint): bigint {
     let ret = BigInt(0)
     for (let i = coeff.length - 1; i >= 0; i--) {
-        ret = posMod(coeff[i] + x * ret, m)
+        ret = posMod(coeff[i as number] + x * ret, m)
     }
     return ret
 }
@@ -32,36 +32,36 @@ export function interpolate(x: bigint[], y: bigint[], m: bigint): bigint[] {
         s = [],
         coeff = []
     for (let i = 0; i < n; i++) {
-        s[i] = BigInt(0)
-        coeff[i] = BigInt(0)
+        s[i as number] = BigInt(0)
+        coeff[i as number] = BigInt(0)
     }
 
     // Compute s(x)= \Pi (x-xi)
-    s[n] = BigInt(1) // Leading term
+    s[n as number] = BigInt(1) // Leading term
     s[n - 1] = -x[0] % m
     for (let i = 1; i < n; i++) {
         for (let j = n - i - 1; j < n - 1; j++) {
-            s[j] = (s[j] - x[i] * s[j + 1]) % m
+            s[j as number] = (s[j as number] - x[i as number] * s[j + 1]) % m
         }
-        s[n - 1] = (s[n - 1] - x[i]) % m
+        s[n - 1] = (s[n - 1] - x[i as number]) % m
     }
     for (let i = 0; i < n; i++) {
         // compute \Pi (x_i-x_j) by evaluating the derivative of s at x_i
         let phi = BigInt(0)
         for (let j = n; j >= 1; j--) {
-            phi = BigInt(j) * s[j] + x[i] * phi
+            phi = BigInt(j) * s[j as number] + x[i as number] * phi
         }
         phi = posMod(phi, m)
         const ff = invMod(phi, m) % m
 
         let b = BigInt(1)
         for (let j = n - 1; j >= 0; j--) {
-            coeff[j] = posMod(coeff[j] + b * ff * y[i], m)
-            b = s[j] + x[i] * b
+            coeff[j as number] = posMod(coeff[j as number] + b * ff * y[i as number], m)
+            b = s[j as number] + x[i as number] * b
         }
     }
     for (let i = 0; i < n; i++) {
-        if (y[i] != eval_poly(coeff, x[i as number], m)) {
+        if (y[i as number] != eval_poly(coeff, x[i as number], m)) {
             throw new Error('incorrect interpolation')
         }
     }
