@@ -265,12 +265,11 @@ export async function verifyExp(
         //const { commitment, response } = pi[i]
 
         if (challengeBits[i as number]) {
-            const resp = {
-                alpha: pi[i as number].alpha!,
-                beta1: pi[i as number].beta1!,
-                beta2: pi[i as number].beta2!,
-                beta3: pi[i as number].beta3!,
-            },
+            const { alpha, beta1, beta2, beta3 } = pi[i as number]
+            if (!(alpha && beta1 && beta2 && beta3)) {
+                throw new Error('params not found')
+            }
+            const resp = { alpha, beta1, beta2, beta3 },
                 T = paramsNIST.g.mul(resp.alpha),
                 relA = new Relation(paramsNIST.c)
             relA.insertM(
@@ -298,13 +297,11 @@ export async function verifyExp(
             relTx.drain(multiW)
             relTy.drain(multiW)
         } else {
-            const resp = {
-                z: pi[i as number].z,
-                z2: pi[i as number].z2,
-                proof: pi[i as number].proof,
-                r1: pi[i as number].r1,
-                r2: pi[i as number].r2,
+            const { z, z2, proof, r1, r2 } = pi[i as number]
+            if (!(z && z2 && proof && r1 && r2)) {
+                throw new Error('params not found')
             }
+            const resp = { z, z2, proof, r1, r2 }
             let T1 = paramsNIST.g.mul(resp.z)
             const relA = new Relation(paramsNIST.c)
             relA.insertM(
