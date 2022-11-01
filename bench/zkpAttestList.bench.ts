@@ -31,17 +31,17 @@ export async function bench(): Promise<Benchmark.Suite> {
         msg = enc.encode('kilroy was here'),
         msgHash = new Uint8Array(await crypto.subtle.digest('SHA-256', msg)),
         signature = new Uint8Array(
-            await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, keyPair.privateKey!, msg)
+            await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, keyPair.privateKey, msg)
         ),
         params = generateParamsList(),
-        testKey = await keyToInt(keyPair.publicKey!),
+        testKey = await keyToInt(keyPair.publicKey),
         numKeys = 100 * 1000,
         testArray = [testKey]
     for (let i = 0; i < numKeys; i++) {
         const newKey = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify'])
-        testArray.push(await keyToInt(newKey.publicKey!))
+        testArray.push(await keyToInt(newKey.publicKey))
     }
-    const proof = await proveSignatureList(params, msgHash, signature, keyPair.publicKey!, 0, testArray),
+    const proof = await proveSignatureList(params, msgHash, signature, keyPair.publicKey, 0, testArray),
         json = writeJson(SignatureProofList, proof)
     console.log('proof size SignatureProofList:', json.length)
 
@@ -49,7 +49,7 @@ export async function bench(): Promise<Benchmark.Suite> {
         .add(`ZKPSignatureList/prove`, {
             defer: true,
             async fn(deferred: { resolve(): void }) {
-                await proveSignatureList(params, msgHash, signature, keyPair.publicKey!, 0, testArray)
+                await proveSignatureList(params, msgHash, signature, keyPair.publicKey, 0, testArray)
                 deferred.resolve()
             },
         })

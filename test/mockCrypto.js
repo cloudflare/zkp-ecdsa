@@ -14,19 +14,9 @@
  * limitations under the License.
  */
 
-import './mockCrypto.js'
+// Mocking crypto with Node webcrypto API.
+import { webcrypto } from 'crypto';
 
-import { p256 } from '../src/curves/instances.js'
-
-const NS_PER_SEC = 1e9,
-    k = p256.randomScalar()
-let p = p256.generator().mul(k)
-
-const testTimes = 1 << 10,
-    time = process.hrtime()
-for (let i = 0; i < testTimes; i++) {
-    p = p.mul(k)
+if (typeof crypto === 'undefined') {
+    global.crypto = webcrypto;
 }
-const diff = process.hrtime(time)
-
-console.log(`ec/mul: ${(diff[0] * NS_PER_SEC + diff[1]) / testTimes} nanoseconds`)

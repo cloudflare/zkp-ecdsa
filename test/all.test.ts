@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import './mockCrypto.js'
+
 import * as big from './bignum/big.test.js'
 import * as ec from './curves/ec.test.js'
 import * as equality from './commit/equality.test.js'
@@ -24,13 +26,6 @@ import * as mult from './commit/mult.test.js'
 import * as multiMult from './curves/multimult.test.js'
 import * as pointAdd from './exp/pointAdd.test.js'
 import * as zkpList from './zkpAttestList.test.js'
-
-// Mocking crypto with @peculiar/webcrypto only for tests.
-import { Crypto } from '@peculiar/webcrypto'
-
-if (typeof crypto === 'undefined') {
-    global.crypto = new Crypto()
-}
 
 const tests = [
     { name: 'zkpAttestList', test: zkpList.testZKP },
