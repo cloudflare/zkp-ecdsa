@@ -140,19 +140,19 @@ export async function hashNums(nums: bigint[]): Promise<bigint> {
         enc = new TextEncoder()
     let totBytes = 0
     for (let i = 0; i < numNums; i++) {
-        const numBytes = enc.encode(nums[i].toString())
+        const numBytes = enc.encode(nums[i as number].toString())
         totBytes += numBytes.byteLength
         data.push(numBytes)
     }
     const tbh = new Uint8Array(totBytes + 4 * numNums) // Include space for lengths
     let index = 0
     for (let i = 0; i < numNums; i++) {
-        tbh[index++] = (data[i].byteLength >> 24) & 0xff
-        tbh[index++] = (data[i].byteLength >> 16) & 0xff
-        tbh[index++] = (data[i].byteLength >> 8) & 0xff
-        tbh[index++] = data[i].byteLength & 0xff
-        tbh.set(data[i], index)
-        index += data[i].byteLength
+        tbh[index++] = (data[i as number].byteLength >> 24) & 0xff
+        tbh[index++] = (data[i as number].byteLength >> 16) & 0xff
+        tbh[index++] = (data[i as number].byteLength >> 8) & 0xff
+        tbh[index++] = data[i as number].byteLength & 0xff
+        tbh.set(data[i as number], index)
+        index += data[i as number].byteLength
     }
     const hash = await crypto.subtle.digest('SHA-256', tbh)
 
@@ -239,9 +239,9 @@ export const serdeBigInt = {
         }
         return s + v.toString(16)
     },
-    deserializer: function (this: any, v: string): bigint {
+    deserializer: function (this: unknown & { key: string }, v: string): bigint {
         if (!v) {
-            throw new Error('the field ' + this.key + ' is required')
+            throw new Error(`the field ${this.key} is required`)
         }
         if (v.charAt(0) === '-') {
             return -BigInt(v.slice(1))
