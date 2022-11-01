@@ -4,7 +4,7 @@
         "module": "ES2020",
         "lib": [
             "ES2020",
-            "webworker"
+            "dom"
         ],
         "declaration": true,
         "declarationMap": true,
