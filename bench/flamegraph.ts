@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
+import './mockCrypto.js'
+
 import { generateParamsList, keyToInt, proveSignatureList, verifySignatureList } from '../src/index.js'
-
-import isomCrypto from 'node-webcrypto-shim'
-
-global.crypto = isomCrypto
 
 async function main() {
     const keyPair = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']),
@@ -26,18 +24,18 @@ async function main() {
         msg = enc.encode('kilroy was here'),
         msgHash = new Uint8Array(await crypto.subtle.digest('SHA-256', msg)),
         signature = new Uint8Array(
-            await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, keyPair.privateKey!, msg)
+            await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, keyPair.privateKey, msg)
         ),
         params = generateParamsList(),
-        testKey = await keyToInt(keyPair.publicKey!),
+        testKey = await keyToInt(keyPair.publicKey),
         numKeys = 10,
         testArray = [testKey]
     for (let i = 0; i < numKeys; i++) {
         const newKey = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify'])
-        testArray.push(await keyToInt(newKey.publicKey!))
+        testArray.push(await keyToInt(newKey.publicKey))
     }
 
-    const proof = await proveSignatureList(params, msgHash, signature, keyPair.publicKey!, 0, testArray)
+    const proof = await proveSignatureList(params, msgHash, signature, keyPair.publicKey, 0, testArray)
     for (let i = 0; i < 10; i++) {
         const res = await verifySignatureList(params, msgHash, testArray, proof)
         console.log(res)

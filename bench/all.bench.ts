@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import './mockCrypto.js'
+
 import * as big from './bignum/big.bench.js'
 import * as ec from './curves/ec.bench.js'
 import * as equality from './commit/equality.bench.js'
@@ -25,9 +27,6 @@ import * as pointAdd from './exp/pointAdd.bench.js'
 import * as zkpAttestList from './zkpAttestList.bench.js'
 
 import Benchmark from 'benchmark'
-import isomCrypto from 'node-webcrypto-shim'
-
-global.crypto = isomCrypto
 
 const benchs = [
     { name: 'big', bench: big.bench },
@@ -63,8 +62,8 @@ async function runBenchmarks(): Promise<void> {
                 })
                 .run({ async: false })
         } catch (e) {
-            console.log('Error: ' + e.message)
-            console.log('Stack: ' + e.stack)
+            console.log('Error: ' + (e as Error).message)
+            console.log('Stack: ' + (e as Error).stack)
         }
     }
     if (!ran && runOne) {
