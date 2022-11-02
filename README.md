@@ -92,11 +92,13 @@ That's all.
 
 This software library is part of the article _["ZKAttest: Ring and Group Signatures for Existing ECDSA Keys"](https://doi.org/10.1007/978-3-030-99277-4_4)_ published at [Selected Areas in Cryptography (SAC 2021)](https://www.sac2021.ca/) authored by Armando Faz Hernández, Watson Ladd, and Deepak Maram.
 
+A copy of this paper can be downloaded at [research.cloudflare.com](https://research.cloudflare.com/publications/Faz-Hernandez2021/) or at the [IACR ePrint 2021/1183](https://eprint.iacr.org/2021/1183).
+
 To cite this library, use one of the following formats and update the version and date you accessed to this project.
 
 **APA Style**
 
-Faz-Hernández, A., Ladd, W., Maram, D. (2021). ZKAttest: Ring and Group Signatures for Existing ECDSA Keys. In: AlTawy, R., Hülsing, A. (eds) Selected Areas in Cryptography. SAC 2021. Available at https://github.com/cloudflare/zkp-ecdsa. v0.2.3 Accessed Oct 2021.
+Faz-Hernández, A., Ladd, W., Maram, D. (2021). ZKAttest: Ring and Group Signatures for Existing ECDSA Keys. In: AlTawy, R., Hülsing, A. (eds) Selected Areas in Cryptography. SAC 2021. Available at https://github.com/cloudflare/zkp-ecdsa. v0.2.4 Accessed Nov 2022.
 
 **BibTex Source**
 
@@ -114,7 +116,7 @@ Faz-Hernández, A., Ladd, W., Maram, D. (2021). ZKAttest: Ring and Group Signatu
   month     = {oct},
   year      = {2021},
   note      = {Available at \url{https://github.com/cloudflare/zkp-ecdsa}.
-               v0.2.3 Accessed Oct 2021},
+               v0.2.4 Accessed Nov 2022},
 }
 ```
 
