@@ -1,6 +1,6 @@
 ---
 cff-version: 1.2.0
-version: 0.2.4
+version: 0.2.5
 title: "zkp-ecdsa: A Typescript Implementation of ZKAttest"
 license: Apache-2.0
 abstract: >
@@ -57,4 +57,4 @@ preferred-citation:
   isbn: "978-3-030-99277-4"
   notes: >
     Available at https://github.com/cloudflare/zkp-ecdsa.
-    v0.2.4 Accessed Nov 2022
+    v0.2.5 Accessed Nov 2022

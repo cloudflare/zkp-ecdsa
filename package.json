@@ -1,6 +1,6 @@
 {
     "name": "@cloudflare/zkp-ecdsa",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "description": "zkp-ecdsa: A Typescript Implementation of ZKAttest",
     "repository": {
         "type": "git",
@@ -43,6 +43,7 @@
     },
     "scripts": {
         "build": "tsc -b",
+        "prepare": "tsc -b",
         "test": "tsc -b test && node ./lib/test/all.test.js",
         "bench": "tsc -b bench && node ./lib/bench/all.bench.js",
         "bench:hrtime": "tsc -b bench && node ./lib/bench/hrtime.js",
