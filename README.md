@@ -29,11 +29,10 @@ const keyPair = await crypto.subtle.generateKey(
 );
 
 // Sign a message as usual.
-const msgHash = new Uint8Array(await crypto.subtle.digest('SHA-256', msg));
 const signature = new Uint8Array(
     await crypto.subtle.sign(
         { name: 'ECDSA', hash: 'SHA-256' },
-        keyPair.privateKey, msgHash,
+        keyPair.privateKey, msg,
     )
 );
 ```
@@ -56,13 +55,14 @@ Now, create a **ZKAttest proof of knowledge** showing that
 - the signature was generated using the private key, AND
 - the public key is in the ring.
 
-However, the proof does not reveal which public key was used during signing.
+This proof does not reveal which public key was used during signing.
 
 ```ts
 import { generateParamsList, proveSignatureList } from '@cloudflare/zkp-ecdsa'
 
 // Create a zero-knowledge proof about the signature.
 const params = generateParamsList();
+const msgHash = new Uint8Array(await crypto.subtle.digest('SHA-256', msg));
 const zkAttestProof = await proveSignatureList(
     params,
     msgHash,
