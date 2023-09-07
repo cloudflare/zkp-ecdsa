@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  release:
+    if: ${{ github.repository_owner == 'cloudflare' }}
+    name: Publishing to npmjs registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          # registry-url is required to correctly setup authentication per https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages#publishing-packages-to-the-npm-registry
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      - name: Check build
+        run: npm run build
+
+      - name: Publish to npmjs
+        run: npm publish
+        env:
+          # To create a new token, go to https://www.npmjs.com/settings/<user>/tokens/, generate a "Granular Access Token" scoped to @cloudflare/zkp-ecdsa, and update NPM_TOKEN GitHub secret
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
