@@ -26,6 +26,9 @@
     ],
     "license": "Apache-2.0",
     "private": false,
+	"engines": {
+		"node": ">=20"
+	},
     "devDependencies": {
         "@types/benchmark": "2.1.2",
         "@typescript-eslint/eslint-plugin": "5.42.0",
