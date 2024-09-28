@@ -29,8 +29,6 @@ export function bench(): Benchmark.Suite {
             p2 = p.dbl()
         const json = writeJson(Group.Point, p),
             bytes = p.toBytes()
-        console.log(`Point json  size ${group.name}:`, json.length)
-        console.log(`Point bytes size ${group.name}:`, bytes.length)
 
         suite
             .add(`${group.name}/ec/add`, () => {

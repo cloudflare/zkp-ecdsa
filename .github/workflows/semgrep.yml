@@ -7,7 +7,7 @@ on:
       - master
   schedule:
     - cron: '0 0 * * *'
-name: Semgrep config
+name: Semgrep
 jobs:
   semgrep:
     name: semgrep/ci
@@ -21,4 +21,4 @@ jobs:
       image: semgrep/semgrep
     steps:
       - uses: actions/checkout@v4
-      - run: semgrep ci
+      - run: semgrep ci --verbose
