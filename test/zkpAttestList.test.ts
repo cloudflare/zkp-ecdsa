@@ -31,7 +31,7 @@ export async function testZKP(): Promise<boolean> {
         msg = enc.encode('kilroy was here'),
         msgHash = new Uint8Array(await crypto.subtle.digest('SHA-256', msg)),
         signature = new Uint8Array(
-            await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, keyPair.privateKey, msg)
+            await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, keyPair.privateKey, msg),
         ),
         testKey = await keyToInt(keyPair.publicKey),
         testArray = [testKey, BigInt(4), BigInt(5), BigInt(6), BigInt(7), BigInt(8)],

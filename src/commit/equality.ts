@@ -61,7 +61,7 @@ export async function proveEquality(
     params: PedersenParams,
     x: bigint,
     C1: Commitment,
-    C2: Commitment
+    C2: Commitment,
 ): Promise<EqualityProof> {
     const k = rnd(params.c.order),
         A1 = params.commit(k),
@@ -81,7 +81,7 @@ export async function verifyEquality(
     params: PedersenParams,
     C1: Group.Point,
     C2: Group.Point,
-    pi: EqualityProof
+    pi: EqualityProof,
 ): Promise<boolean> {
     const multi = new MultiMult(params.c),
         ok = await aggregateEquality(params, C1, C2, pi, multi)
@@ -96,7 +96,7 @@ export async function aggregateEquality(
     C1: Group.Point,
     C2: Group.Point,
     pi: EqualityProof,
-    multi: MultiMult
+    multi: MultiMult,
 ): Promise<boolean> {
     const challenge = await hashPoints('SHA-256', [C1, C2, pi.A_1, pi.A_2]),
         cc = params.c.newScalar(challenge),

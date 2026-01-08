@@ -30,7 +30,7 @@ export class TEdwards extends Group {
         public readonly a: bigint, // the a parameter.
         public readonly d: bigint, // the d parameter.
         public readonly order: bigint, // the order of the group.
-        public readonly gen: [bigint, bigint] // generator of the group.
+        public readonly gen: [bigint, bigint], // generator of the group.
     ) {
         super(name, p, order)
         verifyPosRange(a, p)
