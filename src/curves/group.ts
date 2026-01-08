@@ -23,7 +23,7 @@ export abstract class Group {
     constructor(
         name: string, // name of the group
         public readonly p: bigint, // prime modulus
-        public readonly order: bigint // order of the group
+        public readonly order: bigint, // order of the group
     ) {
         this.name = name
     }

@@ -39,7 +39,7 @@ export class SignatureProofList {
         keyXcom: Group.Point,
         keyYcom: Group.Point,
         expProof: ExpProof[],
-        membershipProof: GKProof
+        membershipProof: GKProof,
     ) {
         this.R = R
         this.comS1 = comS1
@@ -107,7 +107,7 @@ export async function proveSignatureList(
     sigBytes: Uint8Array,
     publicKey: CryptoKey,
     which: number,
-    keys: bigint[]
+    keys: bigint[],
 ): Promise<SignatureProofList> {
     const ec = p256,
         pkBytes = new Uint8Array(await crypto.subtle.exportKey('raw', publicKey)),
@@ -148,7 +148,7 @@ export async function verifySignatureList(
     params: SystemParametersList,
     msgHash: Uint8Array,
     keys: bigint[],
-    proof: SignatureProofList
+    proof: SignatureProofList,
 ): Promise<boolean> {
     const ec = p256,
         groupOrder = ec.order,
@@ -175,7 +175,7 @@ export async function verifySignatureList(
             proof.keyYcom,
             proof.expProof,
             20,
-            Q
+            Q,
         ))
     ) {
         return false

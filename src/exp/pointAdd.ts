@@ -46,7 +46,7 @@ export class PointAddProof {
         pi_11: MultProof,
         pi_13: MultProof,
         pi_x: EqualityProof,
-        pi_y: EqualityProof
+        pi_y: EqualityProof,
     ) {
         this.C_8 = C_8
         this.C_10 = C_10
@@ -99,7 +99,7 @@ export async function provePointAdd(
     QX: Commitment,
     QY: Commitment,
     RX: Commitment,
-    RY: Commitment
+    RY: Commitment,
 ): Promise<PointAddProof> {
     if (!P.add(Q).eq(R)) {
         throw Error("Points don't add up!")
@@ -186,7 +186,7 @@ export async function verifyPointAdd(
     QY: Group.Point,
     RX: Group.Point,
     RY: Group.Point,
-    pi: PointAddProof
+    pi: PointAddProof,
 ): Promise<boolean> {
     const multi = new MultiMult(params.c),
         ok = await aggregatePointAdd(params, PX, PY, QX, QY, RX, RY, pi, multi)
@@ -205,7 +205,7 @@ export async function aggregatePointAdd(
     RX: Group.Point,
     RY: Group.Point,
     pi: PointAddProof,
-    multi: MultiMult
+    multi: MultiMult,
 ): Promise<boolean> {
     const C1 = PX,
         C2 = QX,

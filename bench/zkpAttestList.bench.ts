@@ -31,7 +31,7 @@ export async function bench(): Promise<Benchmark.Suite> {
         msg = enc.encode('kilroy was here'),
         msgHash = new Uint8Array(await crypto.subtle.digest('SHA-256', msg)),
         signature = new Uint8Array(
-            await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, keyPair.privateKey, msg)
+            await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, keyPair.privateKey, msg),
         ),
         params = generateParamsList(),
         testKey = await keyToInt(keyPair.publicKey),
