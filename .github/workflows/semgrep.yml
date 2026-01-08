@@ -15,8 +15,9 @@ jobs:
   semgrep:
     name: semgrep-oss
     runs-on: ubuntu-slim
+    if: github.repository == 'cloudflare/zkp-ecdsa'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 1
       - id: cache-semgrep
