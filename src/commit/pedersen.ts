@@ -19,7 +19,10 @@ import { jsonMember, jsonObject, toJson } from 'typedjson'
 import { Group } from '../curves/group.js'
 
 export class Commitment {
-    constructor(public p: Group.Point, public r: Group.Scalar) {}
+    constructor(
+        public p: Group.Point,
+        public r: Group.Scalar,
+    ) {}
     add(c: Commitment): Commitment {
         return new Commitment(this.p.add(c.p), this.r.add(c.r))
     }

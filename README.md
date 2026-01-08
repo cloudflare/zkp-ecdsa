@@ -16,6 +16,7 @@
 Ready to use ZKAttest proofs, follow this short guideline.
 
 #### Step 1
+
 Suppose you already have a signature of a message using ECDSA (P-256). Otherwise, create signature as follows:
 
 ```ts
@@ -52,6 +53,7 @@ listKeys.unshift(await keyToInt(keyPair.publicKey));
 #### Step 3
 
 Now, create a **ZKAttest proof of knowledge** showing that
+
 - the signature was generated using the private key, AND
 - the public key is in the ring.
 
@@ -98,7 +100,7 @@ To cite this library, use one of the following formats and update the version an
 
 **APA Style**
 
-Faz-Hernández, A., Ladd, W., Maram, D. (2021). ZKAttest: Ring and Group Signatures for Existing ECDSA Keys. In: AlTawy, R., Hülsing, A. (eds) Selected Areas in Cryptography. SAC 2021. Available at https://github.com/cloudflare/zkp-ecdsa. v0.2.5 Accessed Nov 2022.
+Faz-Hernández, A., Ladd, W., Maram, D. (2021). ZKAttest: Ring and Group Signatures for Existing ECDSA Keys. In: AlTawy, R., Hülsing, A. (eds) Selected Areas in Cryptography. SAC 2021. Available at https://github.com/cloudflare/zkp-ecdsa. v0.2.6 Accessed Jan 2026.
 
 **BibTex Source**
 
@@ -116,7 +118,7 @@ Faz-Hernández, A., Ladd, W., Maram, D. (2021). ZKAttest: Ring and Group Signatu
   month     = {oct},
   year      = {2021},
   note      = {Available at \url{https://github.com/cloudflare/zkp-ecdsa}.
-               v0.2.5 Accessed Nov 2022},
+               v0.2.6 Accessed Jan 2026},
 }
 ```
 

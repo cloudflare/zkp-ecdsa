@@ -83,15 +83,14 @@ function extendedEuclid(X: bigint, Y: bigint): { g: bigint; a: bigint; b: bigint
         c = BigInt(0),
         d = BigInt(1),
         x = X,
-        y = Y,
-        t = BigInt(0)
+        y = Y
     while (y != BigInt(0)) {
         const q = x / y
         a = a - c * q
         b = b - d * q
         x = x - q * y
 
-        t = x
+        let t = x
         x = y
         y = t
 
@@ -171,7 +170,7 @@ export function fromBytes(a: Uint8Array): bigint {
 // Generate a random number between [0, n)
 export function rnd(n: bigint): bigint {
     const buffer = new Uint8Array(byteLen(n))
-    // eslint-disable-next-line no-constant-condition
+
     while (true) {
         crypto.getRandomValues(buffer)
         const ret = fromBytes(buffer)
@@ -201,7 +200,7 @@ export function isPrime(n: bigint, iterations = 7): boolean {
         s++
     }
     let k = iterations
-    // eslint-disable-next-line no-labels
+
     WitnessLoop: do {
         // A base between 2 and n - 2
         const base = rnd(n - BigInt(3)) + BigInt(2)
@@ -218,7 +217,6 @@ export function isPrime(n: bigint, iterations = 7): boolean {
                 return false
             }
             if (x === n - BigInt(1)) {
-                // eslint-disable-next-line no-labels
                 continue WitnessLoop
             }
         }

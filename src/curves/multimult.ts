@@ -67,7 +67,7 @@ export class MultiMult {
             return a.pt.mul(a.scalar)
         }
         heapify(this.pairs)
-        // eslint-disable-next-line no-constant-condition
+
         while (true) {
             if (this.pairs.length === 1) {
                 const a = this.pairs[0]

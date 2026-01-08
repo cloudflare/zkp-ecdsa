@@ -51,7 +51,7 @@ export class ExpProof {
         z2?: Group.Scalar,
         proof?: PointAddProof,
         r1?: Group.Scalar,
-        r2?: Group.Scalar
+        r2?: Group.Scalar,
     ) {
         this.A = A
         this.Tx = Tx
@@ -132,7 +132,7 @@ export async function proveExp(
     Px: Commitment,
     Py: Commitment,
     secparam: number,
-    Q?: Group.Point
+    Q?: Group.Point,
 ): Promise<Array<ExpProof>> {
     const alpha = new Array<Group.Scalar>(secparam),
         r = new Array<Group.Scalar>(secparam),
@@ -179,7 +179,7 @@ export async function proveExp(
                 undefined,
                 undefined,
                 undefined,
-                undefined
+                undefined,
             )
         } else {
             // z = alpha - s
@@ -206,7 +206,7 @@ export async function proveExp(
                     Px,
                     Py,
                     Tx[i as number],
-                    Ty[i as number]
+                    Ty[i as number],
                 )
 
             proof = new ExpProof(
@@ -221,7 +221,7 @@ export async function proveExp(
                 r[i as number].sub(Cs.r),
                 pointAddProof,
                 T1x.r,
-                T1y.r
+                T1y.r,
             )
         }
         allProofs[i as number] = proof
@@ -238,7 +238,7 @@ export async function verifyExp(
     Py: Group.Point,
     pi: Array<ExpProof>,
     secparam: number,
-    Q?: Group.Point
+    Q?: Group.Point,
 ): Promise<boolean> {
     if (secparam > pi.length) {
         throw new Error('security level not achieved')
@@ -274,7 +274,7 @@ export async function verifyExp(
                 relA = new Relation(paramsNIST.c)
             relA.insertM(
                 [T, paramsNIST.h, pi[i as number].A.neg()],
-                [paramsNIST.c.newScalar(BigInt(1)), resp.beta1, paramsNIST.c.newScalar(BigInt(1))]
+                [paramsNIST.c.newScalar(BigInt(1)), resp.beta1, paramsNIST.c.newScalar(BigInt(1))],
             )
             relA.drain(multiN)
             const coordT = T.toAffine()
@@ -288,11 +288,11 @@ export async function verifyExp(
                 relTy = new Relation(paramsWario.c)
             relTx.insertM(
                 [paramsWario.g, paramsWario.h, pi[i as number].Tx.neg()],
-                [sx, resp.beta2, paramsWario.c.newScalar(BigInt(1))]
+                [sx, resp.beta2, paramsWario.c.newScalar(BigInt(1))],
             )
             relTy.insertM(
                 [paramsWario.g, paramsWario.h, pi[i as number].Ty.neg()],
-                [sy, resp.beta3, paramsWario.c.newScalar(BigInt(1))]
+                [sy, resp.beta3, paramsWario.c.newScalar(BigInt(1))],
             )
             relTx.drain(multiW)
             relTy.drain(multiW)
@@ -311,7 +311,7 @@ export async function verifyExp(
                     paramsNIST.c.newScalar(BigInt(1)),
                     paramsNIST.c.newScalar(BigInt(1)),
                     resp.z2,
-                ]
+                ],
             )
             relA.drain(multiN)
 
@@ -338,7 +338,7 @@ export async function verifyExp(
                     pi[i as number].Tx,
                     pi[i as number].Ty,
                     resp.proof,
-                    multiW
+                    multiW,
                 ))
             ) {
                 return false
