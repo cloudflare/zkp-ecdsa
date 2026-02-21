@@ -51,7 +51,7 @@ export class MultProof {
         t_rx: Group.Scalar,
         t_ry: Group.Scalar,
         t_rz: Group.Scalar,
-        t_r4: Group.Scalar
+        t_r4: Group.Scalar,
     ) {
         this.C_4 = C_4
         this.A_x = A_x
@@ -97,7 +97,7 @@ export async function proveMult(
     z: bigint,
     Cx: Commitment,
     Cy: Commitment,
-    Cz: Commitment
+    Cz: Commitment,
 ): Promise<MultProof> {
     const xx = params.c.newScalar(x),
         C4 = Cy.p.mul(xx), // C4 = Cy * x
@@ -135,7 +135,7 @@ export async function verifyMult(
     Cx: Group.Point,
     Cy: Group.Point,
     Cz: Group.Point,
-    pi: MultProof
+    pi: MultProof,
 ): Promise<boolean> {
     const multi = new MultiMult(params.c),
         ok = await aggregateMult(params, Cx, Cy, Cz, pi, multi)
@@ -151,7 +151,7 @@ export async function aggregateMult(
     Cy: Group.Point,
     Cz: Group.Point,
     pi: MultProof,
-    multi: MultiMult
+    multi: MultiMult,
 ): Promise<boolean> {
     const challenge = await hashPoints('SHA-256', [Cx, Cy, Cz, pi.C_4, pi.A_x, pi.A_y, pi.A_z, pi.A_4_1, pi.A_4_2]),
         cc = params.c.newScalar(challenge),

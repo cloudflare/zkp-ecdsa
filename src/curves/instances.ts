@@ -28,7 +28,7 @@ export const p256 = new WeierstrassGroup(
     [
         BigInt('0x6b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296'),
         BigInt('0x4fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f5'),
-    ]
+    ],
 )
 
 export const war256 = new WeierstrassGroup(
@@ -37,7 +37,7 @@ export const war256 = new WeierstrassGroup(
     BigInt('0xffffffff0000000100000000000000017e72b42b30e7317793135661b1c4b114'),
     BigInt('0xb441071b12f4a0366fb552f8e21ed4ac36b06aceeb354224863e60f20219fc56'),
     BigInt('0xffffffff00000001000000000000000000000000ffffffffffffffffffffffff'),
-    [BigInt('0x3'), BigInt('0x5a6dd32df58708e64e97345cbe66600decd9d538a351bb3c30b4954925b1f02d')]
+    [BigInt('0x3'), BigInt('0x5a6dd32df58708e64e97345cbe66600decd9d538a351bb3c30b4954925b1f02d')],
 )
 
 // tomEdwards256: ax^2+y^2 = 1 + dx^2y^2
@@ -50,7 +50,7 @@ export const tomEdwards256 = new TEdwards(
     [
         BigInt('0x7907055d0a7d4abc3eafdc25d431d9659fbe007ee2d8ddc4e906206ea9ba4fdb'),
         BigInt('0xbe231cb9f9bf18319c9f081141559b0a33dddccd2221f0464a9cd57081b01a01'),
-    ]
+    ],
 )
 
 export const ALL_GROUPS: Array<Group> = [p256, war256, tomEdwards256]

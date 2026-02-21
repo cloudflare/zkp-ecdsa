@@ -46,7 +46,7 @@ export class GKProof {
         f: Group.Scalar[],
         za: Group.Scalar[],
         zb: Group.Scalar[],
-        zd: Group.Scalar
+        zd: Group.Scalar,
     ) {
         this.cl = cl
         this.ca = ca
@@ -95,7 +95,7 @@ export async function proveMembership(
     params: PedersenParams,
     com: Commitment,
     index: number,
-    initialValues: bigint[]
+    initialValues: bigint[],
 ): Promise<GKProof> {
     const values = pad(initialValues, params.c), // Require power of two
         c = params.c,
@@ -198,7 +198,7 @@ export async function verifyMembership(
     params: PedersenParams,
     com: Group.Point,
     initVec: bigint[],
-    proof: GKProof
+    proof: GKProof,
 ): Promise<boolean> {
     const c = params.c,
         multi = new MultiMult(c),
@@ -225,13 +225,13 @@ export async function verifyMembership(
         const rel0 = new Relation(c)
         rel0.insertM(
             [proof.cl[i as number], proof.ca[i as number], params.g, params.h],
-            [c.newScalar(x), c.newScalar(BigInt(1)), proof.f[i as number].neg(), proof.za[i as number].neg()]
+            [c.newScalar(x), c.newScalar(BigInt(1)), proof.f[i as number].neg(), proof.za[i as number].neg()],
         )
         rel0.drain(multi)
         const rel1 = new Relation(c)
         rel1.insertM(
             [proof.cl[i as number], proof.cb[i as number], params.h],
-            [c.newScalar(posMod(x - f[i as number].k, c.order)), c.newScalar(BigInt(1)), proof.zb[i as number].neg()]
+            [c.newScalar(posMod(x - f[i as number].k, c.order)), c.newScalar(BigInt(1)), proof.zb[i as number].neg()],
         )
         rel1.drain(multi)
     }

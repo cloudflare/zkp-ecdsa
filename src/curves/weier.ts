@@ -30,7 +30,7 @@ export class WeierstrassGroup extends Group {
         public readonly a: bigint, // the a parameter, fixed to a=-3.
         public readonly b: bigint, // the b parameter.
         public readonly order: bigint, // the order of the group.
-        public readonly gen: [bigint, bigint] // generator of the group.
+        public readonly gen: [bigint, bigint], // generator of the group.
     ) {
         super(name, p, order)
         verifyPosRange(a, p)
