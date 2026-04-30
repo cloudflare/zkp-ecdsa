@@ -36,6 +36,9 @@ export async function testPointAdd(): Promise<boolean> {
     if (!coordP3) {
         throw new Error('P3 is at infinity')
     }
+    if (P1.eq(P2)) {
+        throw new Error('P1 should not be equal with P2')
+    }
     const { x: x1, y: y1 } = coordP1,
         { x: x2, y: y2 } = coordP2,
         { x: x3, y: y3 } = coordP3,

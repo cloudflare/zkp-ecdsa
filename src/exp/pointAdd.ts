@@ -123,6 +123,9 @@ export async function provePointAdd(
     if (!coordR) {
         throw new Error('R is at infinity')
     }
+    if (P.eq(Q)) {
+        throw new Error('P should not be equal with Q')
+    }
     const { x: x1, y: y1 } = coordP,
         { x: x2, y: y2 } = coordQ,
         { x: x3 } = coordR, // todo(question): why y3 is not used?
