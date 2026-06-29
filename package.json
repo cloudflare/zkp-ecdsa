@@ -45,7 +45,8 @@
         "prettier": "3.8.1",
         "pvutils": "1.1.5",
         "typescript": "5.9.3",
-        "webpack-cli": "4.10.0"
+        "webpack": "5.108.1",
+        "webpack-cli": "7.1.0"
     },
     "scripts": {
         "build": "tsc -b",
